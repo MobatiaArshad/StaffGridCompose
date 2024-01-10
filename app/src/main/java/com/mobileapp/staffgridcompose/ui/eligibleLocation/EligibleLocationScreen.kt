@@ -1,5 +1,6 @@
 package com.mobileapp.staffgridcompose.ui.eligibleLocation
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,26 +14,35 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,12 +58,14 @@ import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.eligibleLocation.model.EligibleLocModel
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun EligibleLocScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: EligibleLocViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val showDialog = remember { mutableStateOf(false) }
     var mainList = remember { eligibleList().toMutableStateList() }
     val selectedNames = remember { mutableStateOf("") }
@@ -122,18 +134,24 @@ fun EligibleLocScreen(
                 }
             }
 
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(2),
-                verticalItemSpacing = 4.dp,
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            LazyHorizontalStaggeredGrid(
+                modifier = Modifier
+                    .height(130.dp)
+                    .padding(top = 30.dp),
+                rows = StaggeredGridCells.Fixed(3),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
                 content = {
                     items(mainList.filter { it.isSelected.value }) { chipsNames ->
                         ChipColumns(chipsNames) {
 
+                            it.isSelected.value = false
+                            selectedNames.value =
+                                mainList.filter { it.isSelected.value }.joinToString { it.name }
+
                         }
+
                     }
                 },
-                modifier = Modifier.fillMaxSize()
             )
 
 
@@ -156,31 +174,29 @@ fun EligibleLocScreen(
 @Preview(showBackground = true)
 @Composable
 fun ChipColumns(
-    data: EligibleLocModel = EligibleLocModel(),
-    delete: () -> Unit = {}
+    data: EligibleLocModel = EligibleLocModel(), delete: (EligibleLocModel) -> Unit = {}
 ) {
-    Card(colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.white)),
-        modifier = Modifier
-            .padding(3.dp)
-            .height(30.dp)
-            .background(
-                color = colorResource(id = R.color.outline_stroke_color),
-                shape = RoundedCornerShape(size = 5.dp)
-            )
-            .border(
-                width = 2.dp,
-                shape = RoundedCornerShape(size = 5.dp),
-                color = colorResource(id = R.color.outline_stroke_color)
-            )
-            .clickable {
-
-            }) {
+    Card(colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.white)
+        ), modifier = Modifier
+        .padding(3.dp)
+        .height(30.dp)
+        .background(
+            color = colorResource(id = R.color.outline_stroke_color),
+            shape = RoundedCornerShape(size = 5.dp)
+        )
+        .border(
+            width = 2.dp,
+            shape = RoundedCornerShape(size = 5.dp),
+            color = colorResource(id = R.color.outline_stroke_color)
+        )
+        .clickable {
+            delete.invoke(data)
+        }) {
         Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.padding(4.dp)
         ) {
             Text(
                 text = data.name,
@@ -190,9 +206,13 @@ fun ChipColumns(
                 fontFamily = inter,
                 fontWeight = FontWeight(600),
                 color = colorResource(id = R.color.black),
-                modifier = Modifier.widthIn(20.dp,70.dp)
+                modifier = Modifier.padding(start = 12.dp)
             )
-            Image(painter = painterResource(id = R.drawable.close_chip), contentDescription = "")
+            Image(
+                painter = painterResource(id = R.drawable.close_chip),
+                contentDescription = "",
+                modifier = Modifier.padding(start = 10.dp)
+            )
         }
     }
 
@@ -231,8 +251,7 @@ fun DialogWithLazyColumn(
                                 .clickable {
                                     items.isSelected.value = !items.isSelected.value
                                 }) {
-                            Checkbox(
-                                checked = items.isSelected.value,
+                            Checkbox(checked = items.isSelected.value,
                                 onCheckedChange = { isChecked ->
                                     items.isSelected.value = !items.isSelected.value
                                 })
