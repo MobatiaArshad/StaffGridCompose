@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mobileapp.staffgridcompose.navController.Screen
 import com.mobileapp.staffgridcompose.ui.eligibleLocation.EligibleLocScreen
 import com.mobileapp.staffgridcompose.ui.homeScreen.HomeScreen
+import com.mobileapp.staffgridcompose.ui.login.SampleComposeNewText
 
 @Composable
 fun Navigation(
@@ -45,6 +46,14 @@ fun Navigation(
 
         composable(route = Screen.EligibleLocation.route) {
             EligibleLocScreen(navController = navController)
+        }
+
+
+        composable(route = Screen.EligibleLocation.route) {
+            EligibleLocScreen(navController = navController)
+        }
+        composable(route = Screen.LoginTestScreen.route) {
+          //  SampleComposeNewText(navController = navController)
         }
     }
 }

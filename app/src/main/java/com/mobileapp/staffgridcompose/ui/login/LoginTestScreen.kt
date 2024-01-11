@@ -1,8 +1,6 @@
 package com.mobileapp.staffgridcompose.ui.login
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun SampleCompose() {
+fun SampleComposeNewText() {
     Box(
         modifier = Modifier
             .fillMaxSize()
