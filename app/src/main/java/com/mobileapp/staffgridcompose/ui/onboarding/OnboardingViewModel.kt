@@ -1,42 +1,72 @@
 package com.mobileapp.staffgridcompose.ui.onboarding
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mobileapp.staffgridcompose.ui.onboarding.model.PassingData
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+
 class OnboardingViewModel: ViewModel() {
-    private val _onBoardingStep= MutableLiveData(1)
-    var onBoardingStep:LiveData<Int> = _onBoardingStep
-    var passingData= MutableLiveData<PassingData>()
-    private val _isLoaded = MutableLiveData(false)
-    var isDataLoaded:LiveData<Boolean> = _isLoaded
 
+    private var passingData= MutableStateFlow(PassingData())
+    var passedData: StateFlow<PassingData> = passingData
 
-    fun loadData(passedState:Boolean) {
-        passingData.value= PassingData(
-            firstName = "firstName",
-            lastName = "lastName",
-            city = "city",
-            state = "state",
-            postalCode = 0,
-            cellNo = 0,
-            email = "email",
-        )
-        _isLoaded.value = passedState
+    //check whether the api call is completed
+    private val _isUploaded = MutableStateFlow(false)
+    var isDataLoaded:StateFlow<Boolean> = _isUploaded
+
+    private val _isLoading = MutableStateFlow(false)
+    var isLoading:StateFlow<Boolean> = _isLoading
+
+    private val delayedDataFlow = flow {
+            delay(5000L)
+            emit(PassingData(
+                firstName = "firstName",
+                lastName = "lastName",
+                city = "city",
+                state = "state",
+                postalCode = 68555,
+                cellNo = 90486756546,
+                email = "email",
+                streetAddress = "Street Address 1",
+                streetAddress2 = "Street Address 2",
+                emergencyContactNumber = 5645764435))
+
     }
 
-    val isLoadedFlow = flow {
-        // Simulate a 5-second delay
-        delay(5000)
-        emit(true)
+    fun uploadDataToApi(passingData: PassingData){
+        println("DATA= $passingData")
+        triggerDelayedFlow()
     }
 
-    fun changeScreen(step:Int){
-        _onBoardingStep.value=step
+    init {
+        assignValue()
     }
-    fun returnScreen(){
-        if (_onBoardingStep.value!! >1) _onBoardingStep.value = _onBoardingStep.value!! - 1
+    private fun assignValue(){
+        viewModelScope.launch {
+            delayedDataFlow.collectLatest { data ->
+                passingData.value = data
+                println("DATA= ${passedData.value}")
+            }
+        }
     }
+
+    private fun triggerDelayedFlow() {
+        viewModelScope.launch {
+            changeBoolean(true)
+            delay(5000L)
+            changeBoolean(false)
+            _isUploaded.value = true
+        }
+    }
+    private fun changeBoolean(value: Boolean) {
+        _isLoading.value = value
+    }
+
+
+
 }

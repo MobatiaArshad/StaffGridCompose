@@ -20,6 +20,7 @@ fun HomeScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: HomeViewModel = viewModel()
 ) {
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -31,6 +32,13 @@ fun HomeScreen(
         }) {
             Text(
                 text = "Go To Eligible Location"
+            )
+        }
+        Button(onClick = {
+            navController.navigate(Screen.StepOne.route)
+        }) {
+            Text(
+                text = "Go To On Board"
             )
         }
 

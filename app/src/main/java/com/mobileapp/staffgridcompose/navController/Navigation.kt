@@ -8,6 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import com.mobileapp.staffgridcompose.navController.Screen
 import com.mobileapp.staffgridcompose.ui.eligibleLocation.EligibleLocScreen
 import com.mobileapp.staffgridcompose.ui.homeScreen.HomeScreen
+import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepOne
+import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepTwo
 
 @Composable
 fun Navigation(
@@ -45,6 +47,12 @@ fun Navigation(
 
         composable(route = Screen.EligibleLocation.route) {
             EligibleLocScreen(navController = navController)
+        }
+        composable(route = Screen.StepOne.route) {
+            StepOne(navController = navController)
+        }
+        composable(route = Screen.StepTwo.route) {
+            StepTwo(navController = navController)
         }
     }
 }

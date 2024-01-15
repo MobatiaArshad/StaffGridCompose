@@ -13,11 +13,6 @@
         android:theme="@style/Theme.StaffGridCompose"
         tools:targetApi="31">
         <activity
-            android:name=".ui.onboarding.OnBoardingActivity"
-            android:exported="false"
-            android:label="@string/title_activity_on_boarding"
-            android:theme="@style/Theme.StaffGridCompose" />
-        <activity
             android:name=".ui.mainActivity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
