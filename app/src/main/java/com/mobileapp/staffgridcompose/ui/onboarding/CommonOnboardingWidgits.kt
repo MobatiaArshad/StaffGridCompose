@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,8 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenu
@@ -40,18 +37,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobileapp.staffgridcompose.R
-import com.mobileapp.staffgridcompose.ui.eligibleLocation.model.EligibleLocModel
-import com.mobileapp.staffx.ui.mainActivity.theme.inter
 
 @Composable
 fun RoundedOutlinedTextField(
@@ -151,7 +143,7 @@ fun BlueButton(label: String, onCLick: () -> Unit) {
 }
 
 @Composable
-fun DropdownMenuWithTextField(hint: String,onValueChange: (String) -> Unit) {
+fun DropdownMenuWithTextField(hint: String,modifier: Modifier= Modifier,onValueChange: (String) -> Unit) {
 
     var expanded by remember { mutableStateOf(false) }
     val suggestions = listOf("Kotlin", "Java", "Dart", "Python")
@@ -168,9 +160,8 @@ fun DropdownMenuWithTextField(hint: String,onValueChange: (String) -> Unit) {
                 fontWeight = FontWeight(500),
                 color = Color(0xFF000000),
             ),
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 0.dp, bottom = 14.dp)
                 .border(
                     width = 2.dp,
                     color = Color(0xFFE2E8E9),
@@ -253,51 +244,4 @@ fun Loader(
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ChipColumns(
-    data: EligibleLocModel = EligibleLocModel(), delete: (EligibleLocModel) -> Unit = {}
-) {
-    Card(colors = CardDefaults.cardColors(
-        containerColor = colorResource(id = R.color.white)
-    ), modifier = Modifier
-        .padding(3.dp)
-        .height(30.dp)
-        .background(
-            color = colorResource(id = R.color.outline_stroke_color),
-            shape = RoundedCornerShape(size = 5.dp)
-        )
-        .border(
-            width = 2.dp,
-            shape = RoundedCornerShape(size = 5.dp),
-            color = colorResource(id = R.color.outline_stroke_color)
-        )
-        .clickable {
-            delete.invoke(data)
-        }) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.padding(4.dp)
-        ) {
-            androidx.compose.material.Text(
-                text = data.name,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontSize = 12.sp,
-                fontFamily = inter,
-                fontWeight = FontWeight(600),
-                color = colorResource(id = R.color.black),
-                modifier = Modifier.padding(start = 12.dp)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.close_chip),
-                contentDescription = "",
-                modifier = Modifier.padding(start = 10.dp)
-            )
-        }
-    }
-
 }
