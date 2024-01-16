@@ -151,7 +151,7 @@ fun BlueButton(label: String, onCLick: () -> Unit) {
 }
 
 @Composable
-fun DropdownMenuWithTextField(hint: String,onValueChange: (String) -> Unit) {
+fun DropdownMenuWithTextField(hint: String,modifier: Modifier= Modifier,onValueChange: (String) -> Unit) {
 
     var expanded by remember { mutableStateOf(false) }
     val suggestions = listOf("Kotlin", "Java", "Dart", "Python")
@@ -168,9 +168,8 @@ fun DropdownMenuWithTextField(hint: String,onValueChange: (String) -> Unit) {
                 fontWeight = FontWeight(500),
                 color = Color(0xFF000000),
             ),
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 0.dp, bottom = 14.dp)
                 .border(
                     width = 2.dp,
                     color = Color(0xFFE2E8E9),
@@ -253,51 +252,4 @@ fun Loader(
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ChipColumns(
-    data: EligibleLocModel = EligibleLocModel(), delete: (EligibleLocModel) -> Unit = {}
-) {
-    Card(colors = CardDefaults.cardColors(
-        containerColor = colorResource(id = R.color.white)
-    ), modifier = Modifier
-        .padding(3.dp)
-        .height(30.dp)
-        .background(
-            color = colorResource(id = R.color.outline_stroke_color),
-            shape = RoundedCornerShape(size = 5.dp)
-        )
-        .border(
-            width = 2.dp,
-            shape = RoundedCornerShape(size = 5.dp),
-            color = colorResource(id = R.color.outline_stroke_color)
-        )
-        .clickable {
-            delete.invoke(data)
-        }) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.padding(4.dp)
-        ) {
-            androidx.compose.material.Text(
-                text = data.name,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontSize = 12.sp,
-                fontFamily = inter,
-                fontWeight = FontWeight(600),
-                color = colorResource(id = R.color.black),
-                modifier = Modifier.padding(start = 12.dp)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.close_chip),
-                contentDescription = "",
-                modifier = Modifier.padding(start = 10.dp)
-            )
-        }
-    }
-
 }
