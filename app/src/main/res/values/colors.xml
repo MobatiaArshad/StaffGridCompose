@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="theme_yellow">#F6BA2E</color>
+    <color name="theme_navi_blue">#01113D</color>
     <color name="outline_stroke_color">#E2E8E9</color>
 </resources>

@@ -48,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -237,6 +238,11 @@ fun DialogWithLazyColumn(
 ) {
 
     Dialog(
+        properties = DialogProperties(
+            dismissOnBackPress = true,
+            dismissOnClickOutside = true,
+            usePlatformDefaultWidth = false
+        ),
         onDismissRequest = { onDismissRequest.invoke(isOpen, eligibleList) },
 
         ) {
@@ -245,13 +251,11 @@ fun DialogWithLazyColumn(
             color = MaterialTheme.colors.surface,
         ) {
             Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .width(1270.dp)
+
             ) {
 
                 LazyColumn(
-                    modifier = Modifier.height(500.dp)
+                    modifier = Modifier.height(500.dp).width(300.dp)
                 ) {
                     items(eligibleList.toMutableStateList()) { items ->
                         Row(verticalAlignment = Alignment.CenterVertically,
@@ -273,10 +277,30 @@ fun DialogWithLazyColumn(
                     }
                 }
 
-                Button(onClick = {
-                    onDismissRequest.invoke(!isOpen, eligibleList)
-                }) {
-                    Text(text = "Close")
+
+                Row(
+                    horizontalArrangement = Arrangement.Absolute.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 15.dp, start = 20.dp)
+                        .width(84.dp)
+                        .height(28.dp)
+                        .background(
+                            color = colorResource(id = R.color.theme_yellow),
+                            shape = RoundedCornerShape(size = 5.dp)
+                        )
+                        .clickable {
+                            onDismissRequest.invoke(!isOpen, eligibleList)
+                        }
+                ) {
+                    Text(text = "Close",
+                        fontSize = 14.sp,
+                        lineHeight = 16.sp,
+                        fontFamily = inter,
+                        fontWeight = FontWeight(700),
+                        color = colorResource(id = R.color.black),
+                    )
+
                 }
             }
         }
@@ -290,9 +314,6 @@ fun EligibleResultTitle(
     post: EligibleResultModel = EligibleResultModel()
 ) {
 
-    val isExpanded = remember {
-        mutableStateOf(false)
-    }
     val interactionSource = remember {
         MutableInteractionSource()
     }

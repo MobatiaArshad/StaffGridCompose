@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.a71cities.jetpackcomposersklss.navController.Navigation
 import com.mobileapp.staffgridcompose.navController.Screen
@@ -15,6 +16,9 @@ import com.mobileapp.staffx.ui.mainActivity.theme.StaffXTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        installSplashScreen()
+
         setContent {
             StaffXTheme {
                 // A surface container using the 'background' color from the theme

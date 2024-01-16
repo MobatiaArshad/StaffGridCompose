@@ -118,6 +118,8 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
     //Live-Data
-
     implementation ("androidx.compose.runtime:runtime-livedata:1.5.4")
+
+    //SplashScreen
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 }

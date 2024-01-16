@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.StaffGridCompose" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.SplashScreen.MySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#01113D</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/staffx_ico</item>
+        <item name="windowSplashScreenAnimationDuration">3000</item>
+        <item name="postSplashScreenTheme">@style/Theme.StaffGridCompose</item>
+    </style>
 </resources>
