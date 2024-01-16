@@ -41,6 +41,13 @@ fun HomeScreen(
                 text = "Go To On Board"
             )
         }
+        Button(onClick = {
+            navController.navigate(Screen.Login.route)
+        }) {
+            Text(
+                text = "Login Screen"
+            )
+        }
 
     }
 }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mobileapp.staffgridcompose.navController.Screen
 import com.mobileapp.staffgridcompose.ui.eligibleLocation.EligibleLocScreen
 import com.mobileapp.staffgridcompose.ui.homeScreen.HomeScreen
+import com.mobileapp.staffgridcompose.ui.login.LoginScreen
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepOne
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepTwo
 
@@ -23,7 +24,7 @@ fun Navigation(
 //            SocialAuthScreen(navController = navController)
         }
         composable(route = Screen.Login.route) {
-//            LoginScreen(navController = navController)
+            LoginScreen(navController = navController)
         }
         composable(route = Screen.Register.route) {
 //            RegistrationScreen(navController = navController)

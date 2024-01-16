@@ -41,21 +41,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobileapp.staffgridcompose.R
 
+@Preview(showBackground = true)
 @Composable
 fun RoundedOutlinedTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    hint: String,
+    value: String = "",
+    onValueChange: (String) -> Unit = {},
+    hint: String = "",
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
+        singleLine = true,
+        maxLines = 1,
         textStyle = TextStyle(
             fontSize = 14.sp,
             lineHeight = 16.sp,
@@ -75,7 +79,6 @@ fun RoundedOutlinedTextField(
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 0.dp, bottom = 14.dp)
             .border(
                 width = 2.dp,
                 color = Color(0xFFE2E8E9),
@@ -92,8 +95,13 @@ fun RoundedOutlinedTextField(
 
 }
 
+@Preview(showBackground = true)
 @Composable
-fun BlueCheckBox(isChecked: Boolean,label: String, onValueChange: (Boolean) -> Unit) {
+fun BlueCheckBox(
+    isChecked: Boolean = false,
+    label: String = "CheckBox",
+    onValueChange: (Boolean) -> Unit = {}
+) {
     Box {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
@@ -101,13 +109,11 @@ fun BlueCheckBox(isChecked: Boolean,label: String, onValueChange: (Boolean) -> U
                 onCheckedChange = onValueChange,
                 enabled = true,
                 colors = CheckboxDefaults.colors(
-                    checkedColor = Color(0xFF01113D),
-                    checkmarkColor = Color.White
+                    checkedColor = Color(0xFF01113D), checkmarkColor = Color.White
                 )
             )
             Text(
-                text = label,
-                style = TextStyle(
+                text = label, style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 16.87.sp,
                     fontWeight = FontWeight(400),
@@ -118,8 +124,12 @@ fun BlueCheckBox(isChecked: Boolean,label: String, onValueChange: (Boolean) -> U
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun BlueButton(label: String, onCLick: () -> Unit) {
+fun BlueButton(
+    label: String = "",
+    onCLick: () -> Unit = {}
+) {
     OutlinedButton(
         onClick = onCLick,
         border = BorderStroke(1.dp, Color(0xFF01113D)),
@@ -142,16 +152,20 @@ fun BlueButton(label: String, onCLick: () -> Unit) {
 
 }
 
+@Preview(showBackground = true)
 @Composable
-fun DropdownMenuWithTextField(hint: String,modifier: Modifier= Modifier,onValueChange: (String) -> Unit) {
+fun DropdownMenuWithTextField(
+    hint: String = "",
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit = {}
+) {
 
     var expanded by remember { mutableStateOf(false) }
     val suggestions = listOf("Kotlin", "Java", "Dart", "Python")
     var selectedText by remember { mutableStateOf("") }
 
     Column {
-        OutlinedTextField(
-            value = selectedText,
+        OutlinedTextField(value = selectedText,
             enabled = false,
             onValueChange = { selectedText = it },
             textStyle = TextStyle(
@@ -163,9 +177,7 @@ fun DropdownMenuWithTextField(hint: String,modifier: Modifier= Modifier,onValueC
             modifier = modifier
                 .fillMaxWidth()
                 .border(
-                    width = 2.dp,
-                    color = Color(0xFFE2E8E9),
-                    shape = RoundedCornerShape(size = 5.dp)
+                    width = 2.dp, color = Color(0xFFE2E8E9), shape = RoundedCornerShape(size = 5.dp)
                 )
                 .height(52.dp)
                 .clickable { expanded = !expanded },
@@ -175,20 +187,23 @@ fun DropdownMenuWithTextField(hint: String,modifier: Modifier= Modifier,onValueC
                 focusedContainerColor = Color(0xFFFFFFFF),
                 disabledContainerColor = Color(0xFFFFFFFF)
             ),
-            placeholder = { Text(text = hint, style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 16.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF58595B),
-            )) },
+            placeholder = {
+                Text(
+                    text = hint, style = TextStyle(
+                        fontSize = 14.sp,
+                        lineHeight = 16.sp,
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF58595B),
+                    )
+                )
+            },
             trailingIcon = {
                 Icon(
                     if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                     contentDescription = "Expand or collapse dropdown menu",
 //                    modifier = Modifier.clickable { expanded = !expanded }
                 )
-            }
-        )
+            })
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
@@ -198,13 +213,16 @@ fun DropdownMenuWithTextField(hint: String,modifier: Modifier= Modifier,onValueC
                 .background(Color.White) // Set background to white,
         ) {
             suggestions.forEach { label ->
-                DropdownMenuItem(
-                    text = { Text(text = label,  style = TextStyle(
-                        fontSize = 14.sp,
-                        lineHeight = 16.sp,
-                        fontWeight = FontWeight(500),
-                        color = Color(0xFF000000),
-                    )) }, // Provide text content
+                DropdownMenuItem(text = {
+                    Text(
+                        text = label, style = TextStyle(
+                            fontSize = 14.sp,
+                            lineHeight = 16.sp,
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF000000),
+                        )
+                    )
+                }, // Provide text content
                     onClick = {
                         selectedText = label
                         expanded = false
@@ -217,14 +235,15 @@ fun DropdownMenuWithTextField(hint: String,modifier: Modifier= Modifier,onValueC
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun BackBtn(click:()-> Unit) {
+fun BackBtn(
+    click: () -> Unit = {}
+) {
     Box(modifier = Modifier
-        .padding(top = 22.dp)
         .clickable {
             click.invoke()
-        }
-    ) {
+        }) {
         Image(
             painter = painterResource(id = R.drawable.ic_back_btn),
             contentDescription = "image description",
@@ -233,14 +252,17 @@ fun BackBtn(click:()-> Unit) {
     }
 }
 
+@Preview(showBackground = true)
 @Composable
 fun Loader(
-    isLoading: Boolean,
+    isLoading: Boolean = true,
 ) {
     Box {
         if (isLoading) {
             LinearProgressIndicator(
-                modifier = Modifier.fillMaxWidth().align(Alignment.Center)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Center)
             )
         }
     }
