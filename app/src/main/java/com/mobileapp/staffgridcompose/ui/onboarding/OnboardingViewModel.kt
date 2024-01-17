@@ -58,7 +58,7 @@ class OnboardingViewModel: ViewModel() {
     private fun triggerDelayedFlow() {
         viewModelScope.launch {
             changeBoolean(true)
-            delay(5000L)
+            delay(1000L)
             changeBoolean(false)
             _isUploaded.value = true
         }

@@ -47,11 +47,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.onboarding.model.OnboardCells
+import com.mobileapp.staffx.ui.mainActivity.theme.inter
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 
 @Preview(showBackground = true)
@@ -61,8 +64,12 @@ fun RoundedOutlinedTextField(
     value: String = "",
     onValueChange: (String) -> Unit = {},
     hint: String = "",
+    isPassword: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
+
+    val viewPassword = remember { mutableStateOf(!isPassword) }
+
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -84,13 +91,32 @@ fun RoundedOutlinedTextField(
                 )
             )
         },
-        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+
+        keyboardOptions = if (isPassword) KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
+        else KeyboardOptions.Default.copy(keyboardType = keyboardType),
+
+        visualTransformation = if (viewPassword.value) VisualTransformation.None else PasswordVisualTransformation(),
+
+        trailingIcon = {
+            if (isPassword) {
+                Text(
+                    text = if (viewPassword.value) "Hide" else "Show",
+                    modifier = Modifier.clickable {
+                        viewPassword.value = !viewPassword.value
+                    },
+                    fontSize = 12.sp,
+                    lineHeight = 16.sp,
+                    fontFamily = inter,
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF949B9C),
+                )
+            }
+        },
+
         modifier = modifier
             .fillMaxWidth()
             .border(
-                width = 2.dp,
-                color = Color(0xFFE2E8E9),
-                shape = RoundedCornerShape(size = 5.dp)
+                width = 2.dp, color = Color(0xFFE2E8E9), shape = RoundedCornerShape(size = 5.dp)
             )
             .height(52.dp),
         shape = RoundedCornerShape(5.dp),
@@ -106,9 +132,7 @@ fun RoundedOutlinedTextField(
 @Preview(showBackground = true)
 @Composable
 fun BlueCheckBox(
-    isChecked: Boolean = false,
-    label: String = "CheckBox",
-    onValueChange: (Boolean) -> Unit = {}
+    isChecked: Boolean = false, label: String = "CheckBox", onValueChange: (Boolean) -> Unit = {}
 ) {
     Box {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -135,9 +159,7 @@ fun BlueCheckBox(
 @Preview(showBackground = true)
 @Composable
 fun BlueButton(
-    modifier: Modifier= Modifier,
-    label: String = "",
-    onCLick: () -> Unit = {}
+    modifier: Modifier = Modifier, label: String = "", onCLick: () -> Unit = {}
 ) {
     OutlinedButton(
         onClick = onCLick,
@@ -160,10 +182,11 @@ fun BlueButton(
     }
 
 }
+
 @Preview(showBackground = true)
 @Composable
 fun BlueButtonWithIcon(
-    modifier: Modifier= Modifier,
+    modifier: Modifier = Modifier,
     label: String = "",
     onCLick: () -> Unit = {},
 ) {
@@ -173,8 +196,7 @@ fun BlueButtonWithIcon(
         border = BorderStroke(1.dp, Color(0xFF01113D)),
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF01113D)),
         shape = RoundedCornerShape(5), // = 50% percent
-        modifier = modifier
-            .height(52.dp)
+        modifier = modifier.height(52.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
@@ -182,24 +204,22 @@ fun BlueButtonWithIcon(
                 contentDescription = "Custom Icon", // Provide a content description
             )
             Text(
-                text = label,
-                style = TextStyle(
+                text = label, style = TextStyle(
                     fontSize = 18.sp,
                     lineHeight = 26.sp,
                     fontWeight = FontWeight(700),
                     color = Color(0xFFFFFFFF),
                 )
             )
-        }    }
+        }
+    }
 
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DropdownMenuWithTextField(
-    modifier: Modifier = Modifier,
-    hint: String = "",
-    onValueChange: (String) -> Unit = {}
+    modifier: Modifier = Modifier, hint: String = "", onValueChange: (String) -> Unit = {}
 ) {
 
     var expanded by remember { mutableStateOf(false) }
@@ -313,7 +333,7 @@ fun Loader(
 @Preview(showBackground = true)
 @Composable
 fun OnBoardShrinkVIew(
-    modifier: Modifier= Modifier,
+    modifier: Modifier = Modifier,
     data: OnboardCells = OnboardCells(),
 ) {
     val interactionSource = remember {
@@ -323,29 +343,22 @@ fun OnBoardShrinkVIew(
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
-        ),
-        colors = CardDefaults.cardColors(
+        ), colors = CardDefaults.cardColors(
             containerColor = colorResource(id = R.color.white),
-        ),
-        modifier = modifier
-            .fillMaxWidth()
+        ), modifier = modifier.fillMaxWidth()
     ) {
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Column(
-                modifier = Modifier
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = null
-                    ) {
-                        data.isExpanded.value = !data.isExpanded.value
-                    }
-            ) {
+            Column(modifier = Modifier.clickable(
+                    interactionSource = interactionSource, indication = null
+                ) {
+                    data.isExpanded.value = !data.isExpanded.value
+                }) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 25.dp, end = 25.dp,top=12.dp, bottom = 14.dp),
+                        .padding(start = 25.dp, end = 25.dp, top = 12.dp, bottom = 14.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
 
@@ -370,9 +383,9 @@ fun OnBoardShrinkVIew(
                 }
 
                 AnimatedVisibility(visible = data.isExpanded.value) {
-                    when(data.type.value){
-                        1-> InnerCell()
-                        2-> WithButton()
+                    when (data.type.value) {
+                        1 -> InnerCell()
+                        2 -> WithButton()
                     }
                 }
 
@@ -389,27 +402,21 @@ fun InnerCell() {
     ) {
         Column {
 
-            DropdownMenuWithTextField(
-                hint = "Select Provider Type*",
-                modifier = Modifier.padding(
-                    start = 15.dp,
-                    end = 15.dp,
-                    top = 19.dp,
-                    bottom = 18.dp
-                ),
-                onValueChange = {})
-            DropdownMenuWithTextField(
-                hint = "Select Position Type*",
+            DropdownMenuWithTextField(hint = "Select Provider Type*", modifier = Modifier.padding(
+                start = 15.dp, end = 15.dp, top = 19.dp, bottom = 18.dp
+            ), onValueChange = {})
+            DropdownMenuWithTextField(hint = "Select Position Type*",
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
                 onValueChange = {})
-            DropdownMenuWithTextField(
-                hint = "Select Applicant Type*",
+            DropdownMenuWithTextField(hint = "Select Applicant Type*",
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
                 onValueChange = {})
 
         }
     }
-}@Preview(showBackground = true)
+}
+
+@Preview(showBackground = true)
 @Composable
 fun WithButton() {
     Box(
@@ -417,24 +424,22 @@ fun WithButton() {
     ) {
         Column {
 
-            DropdownMenuWithTextField(
-                hint = "Select Provider Type*",
-                modifier = Modifier.padding(
-                    start = 15.dp,
-                    end = 15.dp,
-                    top = 19.dp,
-                    bottom = 18.dp
-                ),
-                onValueChange = {})
-            DropdownMenuWithTextField(
-                hint = "Select Position Type*",
+            DropdownMenuWithTextField(hint = "Select Provider Type*", modifier = Modifier.padding(
+                start = 15.dp, end = 15.dp, top = 19.dp, bottom = 18.dp
+            ), onValueChange = {})
+            DropdownMenuWithTextField(hint = "Select Position Type*",
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
                 onValueChange = {})
-            DropdownMenuWithTextField(
-                hint = "Select Applicant Type*",
+            DropdownMenuWithTextField(hint = "Select Applicant Type*",
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
                 onValueChange = {})
-            BlueButtonWithIcon( modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp).width(171.dp),label = "TYpe")
+            BlueButtonWithIcon(
+                modifier = Modifier
+                    .padding(
+                        start = 15.dp, end = 15.dp, bottom = 18.dp
+                    )
+                    .width(171.dp), label = "TYpe"
+            )
 
         }
     }

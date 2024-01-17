@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -33,13 +36,17 @@ import com.mobileapp.staffgridcompose.ui.onboarding.model.OnboardCells
 @Preview(showSystemUi = true)
 @Composable
 fun StepThree(navController: NavHostController = rememberNavController()) {
-    Box(
-        modifier = Modifier.padding(start = 25.dp, end = 25.dp, bottom = 0.dp)
+    Column(
+        modifier = Modifier
+            .padding(start = 25.dp, end = 25.dp, bottom = 0.dp)
+            .fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
+        Box(
+            Modifier.fillMaxSize()
         ) {
-            Column {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
                 BackBtn {
                     navController.navigate(Screen.StepTwo.route)
                 }
@@ -53,103 +60,138 @@ fun StepThree(navController: NavHostController = rememberNavController()) {
                         color = colorResource(id = R.color.black),
                     )
                 )
-                Column(  Modifier.verticalScroll(rememberScrollState()).fillMaxHeight()
+
+                Column(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
+                    LazyColumn(
+                        Modifier.fillMaxHeight(0.84f)
+                    ) {
+                        item {
+                            OnBoardShrinkVIew(
+                                modifier = Modifier.padding(bottom = 10.dp, top = 14.dp),
+                                OnboardCells(
+                                    title = "POSITION, LICENSE AND CERTIFICATION\n" + "INFORMATION",
+                                    data = listOf(
+                                        DropDownData("Item 1.1"),
+                                        DropDownData("Item 1.2"),
+                                        DropDownData("Item 1.3")
+                                    ),
+                                    isExpanded = remember { mutableStateOf(false) },
+                                    type = remember { mutableIntStateOf(1) },
 
-                    OnBoardShrinkVIew(
-                        modifier = Modifier.padding(bottom = 10.dp, top = 14.dp),
-                        OnboardCells(
-                            title = "POSITION, LICENSE AND CERTIFICATION\n" + "INFORMATION",
-                            data = listOf(
-                                DropDownData("Item 1.1"),
-                                DropDownData("Item 1.2"),
-                                DropDownData("Item 1.3")
-                            ),
-                            isExpanded = remember { mutableStateOf(false) },
-                            type = remember { mutableIntStateOf(1) },
-
+                                    )
                             )
-                    )
-                    OnBoardShrinkVIew(
-                        modifier = Modifier.padding(bottom = 10.dp),
-                        OnboardCells(
-                            title = "ACLS Card",
-                            data = listOf(
-                                DropDownData("Item 1.1"),
-                                DropDownData("Item 1.2"),
-                                DropDownData("Item 1.3")
-                            ),
-                            isExpanded = remember { mutableStateOf(false) },
-                            type = remember { mutableIntStateOf(2) },
+                        }
 
-                            )
-                    )
-                    OnBoardShrinkVIew(
-                        modifier = Modifier.padding(bottom = 10.dp),
-                        OnboardCells(
-                            title = "BLS/CPR",
-                            data = listOf(
-                                DropDownData("Item 1.1"),
-                                DropDownData("Item 1.2"),
-                                DropDownData("Item 1.3")
-                            ),
-                            isExpanded = remember { mutableStateOf(false) },
-                            type = remember { mutableIntStateOf(2) },
+                        item {
+                            OnBoardShrinkVIew(
+                                modifier = Modifier.padding(bottom = 10.dp),
+                                OnboardCells(
+                                    title = "ACLS Card",
+                                    data = listOf(
+                                        DropDownData("Item 1.1"),
+                                        DropDownData("Item 1.2"),
+                                        DropDownData("Item 1.3")
+                                    ),
+                                    isExpanded = remember { mutableStateOf(false) },
+                                    type = remember { mutableIntStateOf(2) },
 
+                                    )
                             )
-                    )
-                    OnBoardShrinkVIew(
-                        modifier = Modifier.padding(bottom = 10.dp),
-                        OnboardCells(
-                            title = "RN",
-                            data = listOf(
-                                DropDownData("Item 1.1"),
-                                DropDownData("Item 1.2"),
-                                DropDownData("Item 1.3")
-                            ),
-                            isExpanded = remember { mutableStateOf(false) },
-                            type = remember { mutableIntStateOf(1) },
 
-                            )
-                    )
-                    OnBoardShrinkVIew(
-                        modifier = Modifier.padding(bottom = 10.dp),
-                        OnboardCells(
-                            title = "Phlebotomist License 2",
-                            data = listOf(
-                                DropDownData("Item 1.1"),
-                                DropDownData("Item 1.2"),
-                                DropDownData("Item 1.3")
-                            ),
-                            isExpanded = remember { mutableStateOf(false) },
-                            type = remember { mutableIntStateOf(1) },
+                        }
 
-                            )
-                    )
-                    OnBoardShrinkVIew(
-                        modifier = Modifier.padding(bottom = 10.dp),
-                        OnboardCells(
-                            title = "Diploma Certificate",
-                            data = listOf(
-                                DropDownData("Item 1.1"),
-                                DropDownData("Item 1.2"),
-                                DropDownData("Item 1.3")
-                            ),
-                            isExpanded = remember { mutableStateOf(false) },
-                            type = remember { mutableIntStateOf(1) },
+                        item {
+                            OnBoardShrinkVIew(
+                                modifier = Modifier.padding(bottom = 10.dp),
+                                OnboardCells(
+                                    title = "BLS/CPR",
+                                    data = listOf(
+                                        DropDownData("Item 1.1"),
+                                        DropDownData("Item 1.2"),
+                                        DropDownData("Item 1.3")
+                                    ),
+                                    isExpanded = remember { mutableStateOf(false) },
+                                    type = remember { mutableIntStateOf(2) },
 
+                                    )
                             )
-                    )
+
+                        }
+
+                        item {
+                            OnBoardShrinkVIew(
+                                modifier = Modifier.padding(bottom = 10.dp),
+                                OnboardCells(
+                                    title = "RN",
+                                    data = listOf(
+                                        DropDownData("Item 1.1"),
+                                        DropDownData("Item 1.2"),
+                                        DropDownData("Item 1.3")
+                                    ),
+                                    isExpanded = remember { mutableStateOf(false) },
+                                    type = remember { mutableIntStateOf(1) },
+
+                                    )
+                            )
+
+                        }
+
+                        item {
+                            OnBoardShrinkVIew(
+                                modifier = Modifier.padding(bottom = 10.dp),
+                                OnboardCells(
+                                    title = "Phlebotomist License 2",
+                                    data = listOf(
+                                        DropDownData("Item 1.1"),
+                                        DropDownData("Item 1.2"),
+                                        DropDownData("Item 1.3")
+                                    ),
+                                    isExpanded = remember { mutableStateOf(false) },
+                                    type = remember { mutableIntStateOf(1) },
+
+                                    )
+                            )
+
+                        }
+
+                        item {
+                            OnBoardShrinkVIew(
+                                modifier = Modifier.padding(bottom = 10.dp),
+                                OnboardCells(
+                                    title = "Diploma Certificate",
+                                    data = listOf(
+                                        DropDownData("Item 1.1"),
+                                        DropDownData("Item 1.2"),
+                                        DropDownData("Item 1.3")
+                                    ),
+                                    isExpanded = remember { mutableStateOf(false) },
+                                    type = remember { mutableIntStateOf(1) },
+
+                                    )
+                            )
+
+                        }
+
+                    }
+
+                    BlueButton(modifier = Modifier.padding(bottom = 52.dp), label = "Save & Next") {
+
+                    }
                 }
+
             }
-
-                BlueButton(modifier = Modifier.padding(bottom = 52.dp),label = "Save & Next") {
-
-                }
-
 
         }
     }
 }
+
+/*
+
+
+
+*/
 
 

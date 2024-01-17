@@ -16,6 +16,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,6 +38,15 @@ fun LoginScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: LoginViewModel = viewModel()
 ) {
+
+    val email = remember {
+        mutableStateOf(viewModel.email.value)
+    }
+    val password = remember {
+        mutableStateOf(viewModel.password.value)
+    }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -59,11 +70,25 @@ fun LoginScreen(
                 modifier = Modifier.padding(start = 29.dp, end = 29.dp)
             ) {
                 RoundedOutlinedTextField(
-                    value = "",
-                    onValueChange = {},
+                    value = email.value,
+                    onValueChange = {
+                        email.value = it
+                    },
                     hint = "Email address",
                     keyboardType = KeyboardType.Email,
-                    modifier = Modifier.padding(top = 23.dp)
+                    modifier = Modifier.padding(top = 23.dp),
+                    isPassword = false
+                )
+
+                RoundedOutlinedTextField(
+                    value = password.value,
+                    onValueChange = {
+                        password.value = it
+                    },
+                    hint = "Password",
+                    keyboardType = KeyboardType.Email,
+                    modifier = Modifier.padding(top = 23.dp),
+                    isPassword = true
                 )
             }
         }
