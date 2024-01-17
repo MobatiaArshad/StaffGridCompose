@@ -1,27 +1,32 @@
 package com.mobileapp.staffgridcompose.ui.onboarding
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
@@ -37,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,14 +51,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobileapp.staffgridcompose.R
+import com.mobileapp.staffgridcompose.ui.onboarding.model.OnboardCells
+import com.mobileapp.staffx.ui.mainActivity.theme.inter
 
 @Preview(showBackground = true)
 @Composable
 fun RoundedOutlinedTextField(
+    modifier: Modifier = Modifier,
     value: String = "",
     onValueChange: (String) -> Unit = {},
     hint: String = "",
-    modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     OutlinedTextField(
@@ -127,6 +135,7 @@ fun BlueCheckBox(
 @Preview(showBackground = true)
 @Composable
 fun BlueButton(
+    modifier: Modifier= Modifier,
     label: String = "",
     onCLick: () -> Unit = {}
 ) {
@@ -136,9 +145,9 @@ fun BlueButton(
         shape = RoundedCornerShape(5), // = 50% percent
         // or shape = CircleShape
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF01113D)),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(52.dp)
     ) {
         Text(
             text = label, style = TextStyle(
@@ -151,12 +160,45 @@ fun BlueButton(
     }
 
 }
+@Preview(showBackground = true)
+@Composable
+fun BlueButtonWithIcon(
+    modifier: Modifier= Modifier,
+    label: String = "",
+    onCLick: () -> Unit = {},
+) {
+    val myIcon = painterResource(id = R.drawable.ic_upload_btn)
+    OutlinedButton(
+        onClick = onCLick,
+        border = BorderStroke(1.dp, Color(0xFF01113D)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF01113D)),
+        shape = RoundedCornerShape(5), // = 50% percent
+        modifier = modifier
+            .height(52.dp)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                painter = myIcon,
+                contentDescription = "Custom Icon", // Provide a content description
+            )
+            Text(
+                text = label,
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    lineHeight = 26.sp,
+                    fontWeight = FontWeight(700),
+                    color = Color(0xFFFFFFFF),
+                )
+            )
+        }    }
+
+}
 
 @Preview(showBackground = true)
 @Composable
 fun DropdownMenuWithTextField(
-    hint: String = "",
     modifier: Modifier = Modifier,
+    hint: String = "",
     onValueChange: (String) -> Unit = {}
 ) {
 
@@ -264,6 +306,136 @@ fun Loader(
                     .fillMaxWidth()
                     .align(Alignment.Center)
             )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OnBoardShrinkVIew(
+    modifier: Modifier= Modifier,
+    data: OnboardCells = OnboardCells(),
+) {
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
+
+    ElevatedCard(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.white),
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null
+                    ) {
+                        data.isExpanded.value = !data.isExpanded.value
+                    }
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 25.dp, end = 25.dp,top=12.dp, bottom = 14.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+
+                    ) {
+                    androidx.compose.material.Text(
+                        text = data.title,
+                        fontSize = 14.sp,
+                        lineHeight = 16.87.sp,
+                        fontFamily = inter,
+                        fontWeight = FontWeight(700),
+                        color = colorResource(id = R.color.black),
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight(700),
+                            color = Color(0xFF1F1F1F),
+                        )
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.drop_down_black),
+                        contentDescription = ""
+                    )
+                }
+
+                AnimatedVisibility(visible = data.isExpanded.value) {
+                    when(data.type.value){
+                        1-> InnerCell()
+                        2-> WithButton()
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InnerCell() {
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column {
+
+            DropdownMenuWithTextField(
+                hint = "Select Provider Type*",
+                modifier = Modifier.padding(
+                    start = 15.dp,
+                    end = 15.dp,
+                    top = 19.dp,
+                    bottom = 18.dp
+                ),
+                onValueChange = {})
+            DropdownMenuWithTextField(
+                hint = "Select Position Type*",
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
+                onValueChange = {})
+            DropdownMenuWithTextField(
+                hint = "Select Applicant Type*",
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
+                onValueChange = {})
+
+        }
+    }
+}@Preview(showBackground = true)
+@Composable
+fun WithButton() {
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column {
+
+            DropdownMenuWithTextField(
+                hint = "Select Provider Type*",
+                modifier = Modifier.padding(
+                    start = 15.dp,
+                    end = 15.dp,
+                    top = 19.dp,
+                    bottom = 18.dp
+                ),
+                onValueChange = {})
+            DropdownMenuWithTextField(
+                hint = "Select Position Type*",
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
+                onValueChange = {})
+            DropdownMenuWithTextField(
+                hint = "Select Applicant Type*",
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
+                onValueChange = {})
+            BlueButtonWithIcon( modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp).width(171.dp),label = "TYpe")
+
         }
     }
 }

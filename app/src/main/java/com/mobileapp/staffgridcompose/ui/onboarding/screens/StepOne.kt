@@ -102,25 +102,23 @@ fun StepOne(
         }
     }
 
-    LaunchedEffect(viewModel.isDataLoaded){
+    LaunchedEffect(viewModel.isDataLoaded) {
         viewModel.isDataLoaded.collect {
             if (it) navController.navigate(Screen.StepTwo.route)
         }
     }
-    LaunchedEffect(viewModel.isLoading){
+    LaunchedEffect(viewModel.isLoading) {
         viewModel.isLoading.collect {
             println("DATA CALLED = \t $it")
-           isLoading= it
+            isLoading = it
         }
     }
 
     Box(
-        modifier = Modifier
-            .padding(start = 25.dp, end = 25.dp, bottom = 0.dp)
+        modifier = Modifier.padding(start = 25.dp, end = 25.dp, bottom = 0.dp)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 BackBtn {
@@ -137,51 +135,63 @@ fun StepOne(
                     )
                 )
                 RoundedOutlinedTextField(
-                    value = firstName.value,
-                    onValueChange = { newString ->
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), value = firstName.value, onValueChange = { newString ->
                         firstName.value = newString
                     }, hint = "First Name"
                 )
                 RoundedOutlinedTextField(
-                    value = lastName.value,
-                    onValueChange = { newString ->
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), value = lastName.value, onValueChange = { newString ->
                         lastName.value = newString
                     }, hint = "Last Name"
                 )
                 RoundedOutlinedTextField(
-                    value = city.value,
-                    onValueChange = { newString ->
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), value = city.value, onValueChange = { newString ->
                         city.value = newString
                     }, hint = "City"
                 )
                 RoundedOutlinedTextField(
-                    value = state.value,
-                    onValueChange = { newString ->
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), value = state.value, onValueChange = { newString ->
                         state.value = newString
                     }, hint = "State"
                 )
                 RoundedOutlinedTextField(
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ),
                     value = if (postalCode.intValue != 0) postalCode.intValue.toString() else "",
                     onValueChange = { newString ->
                         postalCode.intValue = newString.toInt()
-                    }, hint = "Postal Code",
+                    },
+                    hint = "Postal Code",
                     keyboardType = KeyboardType.Number
                 )
                 RoundedOutlinedTextField(
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ),
                     value = if (cellNumber.longValue.toInt() != 0) cellNumber.longValue.toString() else "",
                     onValueChange = { newString ->
                         cellNumber.longValue = newString.toLong()
-                    }, hint = "Cell Phone Number",
+                    },
+                    hint = "Cell Phone Number",
                     keyboardType = KeyboardType.Number
                 )
                 RoundedOutlinedTextField(
-                    value = email.value,
-                    onValueChange = { newString ->
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), value = email.value, onValueChange = { newString ->
                         email.value = newString
                     }, hint = "Email"
                 )
-                BlueCheckBox(
-                    isChecked = isChecked.value,
+                BlueCheckBox(isChecked = isChecked.value,
                     label = "Have you ever had a license suspended, revoked, or under investigation?",
                     onValueChange = {
                         isChecked.value = it
@@ -192,16 +202,17 @@ fun StepOne(
                 BlueButton(label = "Save & Next") {
                     viewModel.uploadDataToApi(
                         PassingData(
-                        firstName = "firstName",
-                        lastName = "lastName",
-                        city = "city",
-                        state = "state",
-                        postalCode = 68555,
-                        cellNo = 90486756546,
-                        email = "email",
-                        streetAddress = "Street Address 1",
-                        streetAddress2 = "Street Address 2",
-                        emergencyContactNumber = 5645764435)
+                            firstName = "firstName",
+                            lastName = "lastName",
+                            city = "city",
+                            state = "state",
+                            postalCode = 68555,
+                            cellNo = 90486756546,
+                            email = "email",
+                            streetAddress = "Street Address 1",
+                            streetAddress2 = "Street Address 2",
+                            emergencyContactNumber = 5645764435
+                        )
                     )
                 }
             }

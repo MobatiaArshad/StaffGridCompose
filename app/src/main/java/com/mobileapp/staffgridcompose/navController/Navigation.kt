@@ -10,6 +10,7 @@ import com.mobileapp.staffgridcompose.ui.eligibleLocation.EligibleLocScreen
 import com.mobileapp.staffgridcompose.ui.homeScreen.HomeScreen
 import com.mobileapp.staffgridcompose.ui.login.LoginScreen
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepOne
+import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepThree
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepTwo
 
 @Composable
@@ -54,6 +55,9 @@ fun Navigation(
         }
         composable(route = Screen.StepTwo.route) {
             StepTwo(navController = navController)
+        }
+        composable(route = Screen.StepThree.route) {
+            StepThree(navController = navController)
         }
     }
 }

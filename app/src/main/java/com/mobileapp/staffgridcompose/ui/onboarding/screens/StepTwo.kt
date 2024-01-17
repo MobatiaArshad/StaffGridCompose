@@ -39,8 +39,9 @@ import com.mobileapp.staffgridcompose.ui.onboarding.model.PassingData
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun StepTwo(navController: NavHostController = rememberNavController(),
-            viewModel: OnboardingViewModel = viewModel()
+fun StepTwo(
+    navController: NavHostController = rememberNavController(),
+    viewModel: OnboardingViewModel = viewModel(),
 ) {
 
     val backCallback = remember {
@@ -58,17 +59,16 @@ fun StepTwo(navController: NavHostController = rememberNavController(),
     }
     BackHandler(enabled = true) {
         backCallback.handleOnBackPressed()
-        true // consume the event
     }
 
     val streetAddress = remember {
         mutableStateOf("")
     }
     val streetAddress2 = remember {
-        mutableStateOf( "")
+        mutableStateOf("")
     }
     val emergencyContactNumber = remember {
-        mutableLongStateOf( 0)
+        mutableLongStateOf(0)
     }
     val appliedBefore = remember {
         mutableStateOf(false)
@@ -79,33 +79,31 @@ fun StepTwo(navController: NavHostController = rememberNavController(),
     var isLoading by remember { mutableStateOf(false) }
     LaunchedEffect(key1 = viewModel.passedData) {
         viewModel.passedData.collect { newData ->
-            streetAddress.value= newData.streetAddress ?: ""
-            streetAddress2.value= newData.streetAddress2 ?: ""
-            appliedBefore.value= newData.appliedBefore
-            eligibleOrNOt.value= newData.eligibleOrNOt
-            emergencyContactNumber.longValue= newData.emergencyContactNumber
+            streetAddress.value = newData.streetAddress ?: ""
+            streetAddress2.value = newData.streetAddress2 ?: ""
+            appliedBefore.value = newData.appliedBefore
+            eligibleOrNOt.value = newData.eligibleOrNOt
+            emergencyContactNumber.longValue = newData.emergencyContactNumber
         }
     }
-    LaunchedEffect(key1 = viewModel.isDataLoaded){
+    LaunchedEffect(key1 = viewModel.isDataLoaded) {
         viewModel.isDataLoaded.collectLatest {
-            if (it) navController.navigate(Screen.Home.route)
+            if (it) navController.navigate(Screen.StepThree.route)
         }
     }
-    LaunchedEffect(viewModel.isLoading){
+    LaunchedEffect(viewModel.isLoading) {
         viewModel.isLoading.collect {
             println("DATA CALLED = \t $it")
-            isLoading= it
+            isLoading = it
         }
     }
 
 
     Box(
-        modifier = Modifier
-            .padding(start = 25.dp, end = 25.dp, bottom = 0.dp)
+        modifier = Modifier.padding(start = 25.dp, end = 25.dp, bottom = 0.dp)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 BackBtn {
@@ -122,35 +120,53 @@ fun StepTwo(navController: NavHostController = rememberNavController(),
                     )
                 )
                 RoundedOutlinedTextField(
-                    value = streetAddress.value,
-                    onValueChange = { value ->
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), value = streetAddress.value, onValueChange = { value ->
                         streetAddress.value = value
                     }, hint = "Street Address"
                 )
                 RoundedOutlinedTextField(
-                    value = streetAddress2.value,
-                    onValueChange = { value ->
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), value = streetAddress2.value, onValueChange = { value ->
                         streetAddress2.value = value
                     }, hint = "Street Address2"
                 )
                 RoundedOutlinedTextField(
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ),
                     value = if (emergencyContactNumber.longValue.toInt() != 0) emergencyContactNumber.longValue.toString() else "",
                     onValueChange = { value ->
                         emergencyContactNumber.longValue = value.toLong()
-                    }, hint = "Emergency Contact Number"
+                    },
+                    hint = "Emergency Contact Number"
                 )
-                DropdownMenuWithTextField("Relation to Applicant"){
+                DropdownMenuWithTextField(
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), hint = "Relation to Applicant"
+                ) {
                     println("Label= $it")
                 }
-                DropdownMenuWithTextField("What kind of phone do you have"){
+                DropdownMenuWithTextField(
+                    modifier = Modifier.padding(
+                        bottom = 18.dp
+                    ), hint = "What kind of phone do you have"
+                ) {
                     println("Label= $it")
                 }
-                BlueCheckBox(isChecked = appliedBefore.value, label = "Have you applied with GoRN before?", onValueChange = {
-                    appliedBefore.value = it
-                })
-                BlueCheckBox(isChecked = eligibleOrNOt.value, label = "Are you legally eligible for employment in the United States?", onValueChange = {
-                    eligibleOrNOt.value = it
-                })
+                BlueCheckBox(isChecked = appliedBefore.value,
+                    label = "Have you applied with GoRN before?",
+                    onValueChange = {
+                        appliedBefore.value = it
+                    })
+                BlueCheckBox(isChecked = eligibleOrNOt.value,
+                    label = "Are you legally eligible for employment in the United States?",
+                    onValueChange = {
+                        eligibleOrNOt.value = it
+                    })
                 Loader(isLoading = isLoading)
             }
             Box(modifier = Modifier.padding(bottom = 52.dp)) {
@@ -166,7 +182,8 @@ fun StepTwo(navController: NavHostController = rememberNavController(),
                             email = "email",
                             streetAddress = "Street Address 1",
                             streetAddress2 = "Street Address 2",
-                            emergencyContactNumber = 5645764435)
+                            emergencyContactNumber = 5645764435
+                        )
                     )
                 }
             }

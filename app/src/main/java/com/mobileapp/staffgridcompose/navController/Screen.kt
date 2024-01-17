@@ -15,4 +15,5 @@ sealed class Screen(val route: String) {
     object EligibleLocation : Screen("eligible_loc")
     object StepOne : Screen("step_one")
     object StepTwo : Screen("step_two")
+    object StepThree : Screen("step_three")
 }
