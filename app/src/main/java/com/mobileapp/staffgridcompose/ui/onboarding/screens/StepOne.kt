@@ -59,7 +59,6 @@ fun StepOne(
     }
     BackHandler(enabled = true) {
         backCallback.handleOnBackPressed()
-        true // consume the event
     }
 
 
