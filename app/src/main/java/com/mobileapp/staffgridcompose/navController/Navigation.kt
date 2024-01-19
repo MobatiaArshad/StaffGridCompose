@@ -26,7 +26,7 @@ fun Navigation(
     NavHost(navController = navController, startDestination = startDestination) {
 
         composable(route = Screen.SocialAuth.route) {
-//            SocialAuthScreen(navController = navController)
+
         }
         composable(route = Screen.Login.route,
             enterTransition = {
@@ -59,23 +59,23 @@ fun Navigation(
             ForgotPassScreen(navController = navController)
         }
         composable(route = Screen.Register.route) {
-//            RegistrationScreen(navController = navController)
+
         }
 
         composable(route = Screen.Home.route) {
             HomeScreen(navController = navController)
         }
         composable(route = Screen.OverView.route) {
-//            OverViewScreen(navController = navController)
+
         }
         composable(route = Screen.Interests.route) {
-//            YourInterests(navController = navController)
+
         }
         composable(route = Screen.ContentManager.route) {
-//            ContentManagerScreen(navController = navController)
+
         }
         composable(route = Screen.Profile.route) {
-//            ProfileScreen(navController = navController)
+
         }
 
         composable(route = Screen.EligibleLocation.route) {
