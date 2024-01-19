@@ -56,6 +56,8 @@ import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.onboarding.model.OnboardCells
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
+import com.mobileapp.staffx.ui.mainActivity.theme.naviLight
+import com.mobileapp.staffx.ui.mainActivity.theme.white
 
 @Preview(showBackground = true)
 @Composable
@@ -67,7 +69,7 @@ fun RoundedOutlinedTextField(
     isPassword: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
-
+    val interactionSource = remember { MutableInteractionSource() }
     val viewPassword = remember { mutableStateOf(!isPassword) }
 
     OutlinedTextField(
@@ -101,9 +103,14 @@ fun RoundedOutlinedTextField(
             if (isPassword) {
                 Text(
                     text = if (viewPassword.value) "Hide" else "Show",
-                    modifier = Modifier.clickable {
-                        viewPassword.value = !viewPassword.value
-                    },
+                    modifier = Modifier
+                        .clickable (
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) {
+                            viewPassword.value = !viewPassword.value
+                        }
+                        .padding(end = 5.dp),
                     fontSize = 12.sp,
                     lineHeight = 16.sp,
                     fontFamily = inter,
@@ -177,6 +184,33 @@ fun BlueButton(
                 lineHeight = 26.sp,
                 fontWeight = FontWeight(700),
                 color = Color(0xFFFFFFFF),
+            )
+        )
+    }
+
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LightBlueButton(
+    modifier: Modifier = Modifier, label: String = "", onCLick: () -> Unit = {}
+) {
+    OutlinedButton(
+        onClick = onCLick,
+        border = BorderStroke(1.dp, naviLight),
+        shape = RoundedCornerShape(5), // = 50% percent
+        // or shape = CircleShape
+        colors = ButtonDefaults.buttonColors(containerColor = naviLight),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(52.dp)
+    ) {
+        Text(
+            text = label, style = TextStyle(
+                fontSize = 18.sp,
+                lineHeight = 26.sp,
+                fontWeight = FontWeight(700),
+                color = white,
             )
         )
     }
@@ -351,10 +385,10 @@ fun OnBoardShrinkVIew(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.clickable(
-                    interactionSource = interactionSource, indication = null
-                ) {
-                    data.isExpanded.value = !data.isExpanded.value
-                }) {
+                interactionSource = interactionSource, indication = null
+            ) {
+                data.isExpanded.value = !data.isExpanded.value
+            }) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
