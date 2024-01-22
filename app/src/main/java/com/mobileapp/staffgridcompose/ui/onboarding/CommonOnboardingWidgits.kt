@@ -50,11 +50,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.onboarding.model.OnboardCells
-import com.mobileapp.staffx.ui.mainActivity.theme.inter
+import com.mobileapp.staffgridcompose.ui.onboarding.model.StepThreeCell
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 import com.mobileapp.staffx.ui.mainActivity.theme.naviLight
 import com.mobileapp.staffx.ui.mainActivity.theme.white
@@ -222,15 +223,17 @@ fun LightBlueButton(
 fun BlueButtonWithIcon(
     modifier: Modifier = Modifier,
     label: String = "",
+    height: Dp =52.dp,
+    iconId: Int= R.drawable.ic_upload_btn,
     onCLick: () -> Unit = {},
 ) {
-    val myIcon = painterResource(id = R.drawable.ic_upload_btn)
+    val myIcon = painterResource(id = iconId)
     OutlinedButton(
         onClick = onCLick,
         border = BorderStroke(1.dp, Color(0xFF01113D)),
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF01113D)),
         shape = RoundedCornerShape(5), // = 50% percent
-        modifier = modifier.height(52.dp)
+        modifier = modifier.height(height)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(

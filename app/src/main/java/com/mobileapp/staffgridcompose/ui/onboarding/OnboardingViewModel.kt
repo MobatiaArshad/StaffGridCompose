@@ -3,6 +3,7 @@ package com.mobileapp.staffgridcompose.ui.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mobileapp.staffgridcompose.ui.onboarding.model.PassingData
+import com.mobileapp.staffgridcompose.ui.onboarding.model.StepThreeCell
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +23,12 @@ class OnboardingViewModel: ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     var isLoading:StateFlow<Boolean> = _isLoading
 
+    private val _stepThreeList: MutableStateFlow<List<StepThreeCell>> = MutableStateFlow(emptyList())
+    val stepThreeList: StateFlow<List<StepThreeCell>> = _stepThreeList
+
+
     private val delayedDataFlow = flow {
-            delay(5000L)
+            delay(1000L)
             emit(PassingData(
                 firstName = "firstName",
                 lastName = "lastName",
@@ -68,5 +73,11 @@ class OnboardingViewModel: ViewModel() {
     }
 
 
+    fun addNewDataToCell(id:Int){
+            val newData = StepThreeCell(id = id) // Replace with actual new data
+        if (id==1)_stepThreeList.value = emptyList()
+        _stepThreeList.value = _stepThreeList.value + newData
+        println("DATA=> \t ${_stepThreeList.value}")
+    }
 
 }

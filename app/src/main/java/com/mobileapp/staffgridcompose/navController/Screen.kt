@@ -17,4 +17,5 @@ sealed class Screen(val route: String) {
     object StepOne : Screen("step_one")
     object StepTwo : Screen("step_two")
     object StepThree : Screen("step_three")
+    object StepFour : Screen("step_Four")
 }
