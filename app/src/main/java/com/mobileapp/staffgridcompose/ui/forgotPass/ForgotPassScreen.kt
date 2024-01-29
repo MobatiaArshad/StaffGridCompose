@@ -29,10 +29,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.mobileapp.staffgridcompose.R
+import com.mobileapp.staffgridcompose.navController.Screen
 import com.mobileapp.staffgridcompose.ui.onboarding.LightBlueButton
 import com.mobileapp.staffgridcompose.ui.onboarding.RoundedOutlinedTextField
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
-import com.mobileapp.staffx.ui.mainActivity.theme.interBold
 import com.mobileapp.staffx.ui.mainActivity.theme.interSemiBold
 import com.mobileapp.staffx.ui.mainActivity.theme.white
 
@@ -125,7 +125,7 @@ fun ForgotPassScreen(
                         .padding(top = 24.dp),
                     label = "Send Email"
                 ) {
-
+                    navController.popBackStack(Screen.VerificationScreen.route,false)
                 }
             }
 

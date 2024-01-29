@@ -20,6 +20,7 @@ import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepFour
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepOne
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepThree
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepTwo
+import com.mobileapp.staffgridcompose.ui.verifyEmail.VerifyEmailScreen
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -63,6 +64,11 @@ fun Navigation(
         ) {
             ForgotPassScreen(navController = navController)
         }
+
+        composable(route = Screen.VerificationScreen.route) {
+            VerifyEmailScreen(navController= navController)
+        }
+
         composable(route = Screen.Register.route) {
 
         }
