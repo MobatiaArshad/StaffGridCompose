@@ -48,6 +48,13 @@ fun HomeScreen(
                 text = "Login Screen"
             )
         }
+        Button(onClick = {
+            navController.navigate(Screen.PermissionScreen.route)
+        }) {
+            Text(
+                text = "Direct Screen"
+            )
+        }
 
     }
 }

@@ -1,5 +1,7 @@
 package com.a71cities.jetpackcomposersklss.navController
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -13,11 +15,13 @@ import com.mobileapp.staffgridcompose.ui.eligibleLocation.EligibleLocScreen
 import com.mobileapp.staffgridcompose.ui.forgotPass.ForgotPassScreen
 import com.mobileapp.staffgridcompose.ui.homeScreen.HomeScreen
 import com.mobileapp.staffgridcompose.ui.login.LoginScreen
+import com.mobileapp.staffgridcompose.ui.onboarding.screens.PermissionScreen
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepFour
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepOne
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepThree
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepTwo
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun Navigation(
     navController: NavHostController = rememberNavController(),
@@ -93,6 +97,9 @@ fun Navigation(
         }
         composable(route = Screen.StepFour.route) {
             StepFour(navController = navController)
+        }
+        composable(route = Screen.PermissionScreen.route) {
+            PermissionScreen(navController = navController)
         }
     }
 }

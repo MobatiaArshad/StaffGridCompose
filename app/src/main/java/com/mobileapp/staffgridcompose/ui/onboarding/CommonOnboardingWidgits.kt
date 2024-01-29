@@ -37,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,10 +56,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.onboarding.model.OnboardCells
-import com.mobileapp.staffgridcompose.ui.onboarding.model.StepThreeCell
+import com.mobileapp.staffgridcompose.utils.ChooseDate
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 import com.mobileapp.staffx.ui.mainActivity.theme.naviLight
 import com.mobileapp.staffx.ui.mainActivity.theme.white
+import java.time.LocalDate
 
 @Preview(showBackground = true)
 @Composable
@@ -68,7 +70,7 @@ fun RoundedOutlinedTextField(
     onValueChange: (String) -> Unit = {},
     hint: String = "",
     isPassword: Boolean = false,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val viewPassword = remember { mutableStateOf(!isPassword) }
@@ -105,7 +107,7 @@ fun RoundedOutlinedTextField(
                 Text(
                     text = if (viewPassword.value) "Hide" else "Show",
                     modifier = Modifier
-                        .clickable (
+                        .clickable(
                             interactionSource = interactionSource,
                             indication = null
                         ) {
@@ -140,7 +142,7 @@ fun RoundedOutlinedTextField(
 @Preview(showBackground = true)
 @Composable
 fun BlueCheckBox(
-    isChecked: Boolean = false, label: String = "CheckBox", onValueChange: (Boolean) -> Unit = {}
+    isChecked: Boolean = false, label: String = "CheckBox", onValueChange: (Boolean) -> Unit = {},
 ) {
     Box {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -167,7 +169,7 @@ fun BlueCheckBox(
 @Preview(showBackground = true)
 @Composable
 fun BlueButton(
-    modifier: Modifier = Modifier, label: String = "", onCLick: () -> Unit = {}
+    modifier: Modifier = Modifier, label: String = "", onCLick: () -> Unit = {},
 ) {
     OutlinedButton(
         onClick = onCLick,
@@ -194,7 +196,7 @@ fun BlueButton(
 @Preview(showBackground = true)
 @Composable
 fun LightBlueButton(
-    modifier: Modifier = Modifier, label: String = "", onCLick: () -> Unit = {}
+    modifier: Modifier = Modifier, label: String = "", onCLick: () -> Unit = {},
 ) {
     OutlinedButton(
         onClick = onCLick,
@@ -223,8 +225,8 @@ fun LightBlueButton(
 fun BlueButtonWithIcon(
     modifier: Modifier = Modifier,
     label: String = "",
-    height: Dp =52.dp,
-    iconId: Int= R.drawable.ic_upload_btn,
+    height: Dp = 52.dp,
+    iconId: Int = R.drawable.ic_upload_btn,
     onCLick: () -> Unit = {},
 ) {
     val myIcon = painterResource(id = iconId)
@@ -256,7 +258,7 @@ fun BlueButtonWithIcon(
 @Preview(showBackground = true)
 @Composable
 fun DropdownMenuWithTextField(
-    modifier: Modifier = Modifier, hint: String = "", onValueChange: (String) -> Unit = {}
+    modifier: Modifier = Modifier, hint: String = "", onValueChange: (String) -> Unit = {},
 ) {
 
     var expanded by remember { mutableStateOf(false) }
@@ -337,7 +339,7 @@ fun DropdownMenuWithTextField(
 @Preview(showBackground = true)
 @Composable
 fun BackBtn(
-    click: () -> Unit = {}
+    click: () -> Unit = {},
 ) {
     Box(modifier = Modifier
         .clickable {
@@ -372,6 +374,7 @@ fun Loader(
 fun OnBoardShrinkVIew(
     modifier: Modifier = Modifier,
     data: OnboardCells = OnboardCells(),
+    onClick: () -> Unit = {}
 ) {
     val interactionSource = remember {
         MutableInteractionSource()
@@ -422,7 +425,9 @@ fun OnBoardShrinkVIew(
                 AnimatedVisibility(visible = data.isExpanded.value) {
                     when (data.type.value) {
                         1 -> InnerCell()
-                        2 -> WithButton()
+                        2 -> WithButton(){
+                            onClick.invoke()
+                        }
                     }
                 }
 
@@ -455,29 +460,82 @@ fun InnerCell() {
 
 @Preview(showBackground = true)
 @Composable
-fun WithButton() {
+fun WithButton(onClick: () -> Unit = {}) {
     Box(
         modifier = Modifier.fillMaxWidth()
     ) {
         Column {
 
-            DropdownMenuWithTextField(hint = "Select Provider Type*", modifier = Modifier.padding(
+            DropdownMenuWithTextField(hint = "State*", modifier = Modifier.padding(
                 start = 15.dp, end = 15.dp, top = 19.dp, bottom = 18.dp
             ), onValueChange = {})
-            DropdownMenuWithTextField(hint = "Select Position Type*",
-                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
-                onValueChange = {})
-            DropdownMenuWithTextField(hint = "Select Applicant Type*",
-                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
-                onValueChange = {})
+            TextWithDatePicker(hint = "Valid Until*",
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),)
             BlueButtonWithIcon(
                 modifier = Modifier
                     .padding(
                         start = 15.dp, end = 15.dp, bottom = 18.dp
                     )
                     .width(171.dp), label = "TYpe"
-            )
+            ){
+                onClick.invoke()
+            }
 
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TextWithDatePicker(modifier: Modifier = Modifier, hint: String = "", onClick: () -> Unit = {}) {
+    var selectedDate by remember { mutableStateOf("") }
+    val showDialog = rememberSaveable { mutableStateOf(false) }
+    Column {
+        OutlinedTextField(value = selectedDate,
+            enabled = false,
+            onValueChange = { selectedDate = it },
+            textStyle = TextStyle(
+                fontSize = 14.sp,
+                lineHeight = 16.sp,
+                fontWeight = FontWeight(500),
+                color = Color(0xFF000000),
+            ),
+            modifier = modifier
+                .fillMaxWidth()
+                .border(
+                    width = 2.dp, color = Color(0xFFE2E8E9), shape = RoundedCornerShape(size = 5.dp)
+                )
+                .height(52.dp)
+                .clickable { },
+            shape = RoundedCornerShape(5.dp),
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFFFFFFFF),
+                focusedContainerColor = Color(0xFFFFFFFF),
+                disabledContainerColor = Color(0xFFFFFFFF)
+            ),
+            placeholder = {
+                Text(
+                    text = hint, style = TextStyle(
+                        fontSize = 14.sp,
+                        lineHeight = 16.sp,
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF58595B),
+                    )
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    painterResource(id = R.drawable.ic_calender),
+                    contentDescription = "Date Picker Icon",
+                    modifier = Modifier.clickable { showDialog.value= true }
+                )
+            })
+        if (showDialog.value) {
+            ChooseDate(showDialog.value) { selectedDateInMillis ->
+                // Update selectedDateMillis or other state variables here
+                selectedDate = LocalDate.ofEpochDay(selectedDateInMillis / 86400000).toString()
+                showDialog.value= false
+            }
         }
     }
 }
