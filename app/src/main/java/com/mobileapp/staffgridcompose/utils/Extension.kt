@@ -27,7 +27,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.mobileapp.staffgridcompose.utils.Constant.STAFF_X
 
+fun logging(input: Any) {
+    println("$STAFF_X $input")
+}
+
+fun routeArgName(input: Any): String = "/{$input}"
+fun routeOptArgName(input: Any): String = "?$input={$input}"
+fun routeArgs(input: Any): String = "/$input"
+fun routeOptArgs(name: Any, input: Any): String = "?$name=$input"
+
+enum class Loading { Idle, Loading, Success, Failed }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

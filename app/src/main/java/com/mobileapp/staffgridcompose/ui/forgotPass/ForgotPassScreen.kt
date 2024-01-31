@@ -32,6 +32,7 @@ import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.navController.Screen
 import com.mobileapp.staffgridcompose.ui.onboarding.LightBlueButton
 import com.mobileapp.staffgridcompose.ui.onboarding.RoundedOutlinedTextField
+import com.mobileapp.staffgridcompose.utils.routeArgs
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 import com.mobileapp.staffx.ui.mainActivity.theme.interSemiBold
 import com.mobileapp.staffx.ui.mainActivity.theme.white
@@ -125,7 +126,11 @@ fun ForgotPassScreen(
                         .padding(top = 24.dp),
                     label = "Send Email"
                 ) {
-                    navController.popBackStack(Screen.VerificationScreen.route,false)
+                    navController.navigate(Screen.VerificationScreen.route) {
+                        popUpTo(Screen.ForgotPassword.route) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
 

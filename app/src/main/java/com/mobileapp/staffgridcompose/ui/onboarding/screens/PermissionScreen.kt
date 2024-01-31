@@ -44,6 +44,7 @@ import com.mobileapp.staffx.ui.mainActivity.theme.StaffXTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
+@Preview(showBackground = true)
 fun PermissionScreen(navController: NavHostController = rememberNavController()) {
     PermissionScreenBody {
         PermissionScreenContent()

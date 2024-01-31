@@ -18,6 +18,6 @@ sealed class Screen(val route: String) {
     data object StepOne : Screen("step_one")
     data object StepTwo : Screen("step_two")
     data object StepThree : Screen("step_three")
-    object StepFour : Screen("step_Four")
-    object PermissionScreen : Screen("permission_Screen")
+    data object StepFour : Screen("step_Four")
+    data object PermissionScreen : Screen("permission_Screen")
 }

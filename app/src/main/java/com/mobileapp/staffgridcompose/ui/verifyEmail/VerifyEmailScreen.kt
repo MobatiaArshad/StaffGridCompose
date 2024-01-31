@@ -31,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.onboarding.LightBlueButton
 import com.mobileapp.staffgridcompose.ui.onboarding.RoundedOutlinedTextField
+import com.mobileapp.staffgridcompose.utils.logging
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 import com.mobileapp.staffx.ui.mainActivity.theme.interSemiBold
 import com.mobileapp.staffx.ui.mainActivity.theme.white
@@ -39,7 +40,8 @@ import com.mobileapp.staffx.ui.mainActivity.theme.white
 @Composable
 fun VerifyEmailScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: VerifyEmailViewModel = viewModel()
+    viewModel: VerifyEmailViewModel = viewModel(),
+    isFromReg: Boolean = false
 ) {
 
     val code = remember {
@@ -128,6 +130,7 @@ fun VerifyEmailScreen(
                     label = "Verify"
                 ) {
 
+                    logging(" Is from Reg $isFromReg")
                 }
             }
 
