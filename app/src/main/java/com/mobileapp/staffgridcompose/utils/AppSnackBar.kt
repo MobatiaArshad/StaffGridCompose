@@ -1,4 +1,4 @@
-package com.a71cities.jetpackcomposersklss.utils
+package com.mobileapp.staffgridcompose.utils
 
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -29,7 +29,7 @@ fun SnackBarWithoutScaffold(
     ){
         Snackbar(
             snackbarData = it,
-            containerColor = colorResource(id = R.color.purple_700),
+            containerColor = colorResource(id = R.color.theme_yellow),
             contentColor = Color.White
         )
     }

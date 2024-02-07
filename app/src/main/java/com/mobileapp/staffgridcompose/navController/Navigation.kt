@@ -24,6 +24,7 @@ import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepThree
 import com.mobileapp.staffgridcompose.ui.onboarding.screens.StepTwo
 import com.mobileapp.staffgridcompose.ui.signUp.SignUpScreen
 import com.mobileapp.staffgridcompose.ui.verifyEmail.VerifyEmailScreen
+import com.mobileapp.staffgridcompose.ui.welcomeScreen.WelcomeScreen
 import com.mobileapp.staffgridcompose.utils.routeOptArgName
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -61,6 +62,7 @@ fun Navigation(
         ) {
             LoginScreen(navController = navController)
         }
+
         composable(
             route = Screen.ForgotPassword.route,
             enterTransition = {
@@ -116,6 +118,29 @@ fun Navigation(
                 navController = navController,
                 isFromReg = isFromReg
             )
+        }
+
+        composable(
+            route = Screen.WelcomeScreen.route,
+            enterTransition = {
+                return@composable slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start, tween(tweenTime)
+                )
+            }, exitTransition = {
+                return@composable slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start, tween(tweenTime)
+                )
+            }, popEnterTransition = {
+                return@composable slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End, tween(tweenTime)
+                )
+            }, popExitTransition = {
+                return@composable slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End, tween(tweenTime)
+                )
+            }
+        ) {
+            WelcomeScreen(navController = navController)
         }
 
         composable(

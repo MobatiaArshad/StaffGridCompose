@@ -431,7 +431,7 @@ fun OnBoardShrinkVIew(
                 AnimatedVisibility(visible = data.isExpanded.value) {
                     when (data.type.value) {
                         1 -> InnerCell()
-                        2 -> WithButton(){
+                        2 -> WithButton() {
                             onClick.invoke()
                         }
                     }
@@ -475,15 +475,17 @@ fun WithButton(onClick: () -> Unit = {}) {
             DropdownMenuWithTextField(hint = "State*", modifier = Modifier.padding(
                 start = 15.dp, end = 15.dp, top = 19.dp, bottom = 18.dp
             ), onValueChange = {})
-            TextWithDatePicker(hint = "Valid Until*",
-                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),)
+            TextWithDatePicker(
+                hint = "Valid Until*",
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 18.dp),
+            )
             BlueButtonWithIcon(
                 modifier = Modifier
                     .padding(
                         start = 15.dp, end = 15.dp, bottom = 18.dp
                     )
                     .width(171.dp), label = "TYpe"
-            ){
+            ) {
                 onClick.invoke()
             }
 
@@ -533,14 +535,14 @@ fun TextWithDatePicker(modifier: Modifier = Modifier, hint: String = "", onClick
                 Icon(
                     painterResource(id = R.drawable.ic_calender),
                     contentDescription = "Date Picker Icon",
-                    modifier = Modifier.clickable { showDialog.value= true }
+                    modifier = Modifier.clickable { showDialog.value = true }
                 )
             })
         if (showDialog.value) {
             ChooseDate(showDialog.value) { selectedDateInMillis ->
                 // Update selectedDateMillis or other state variables here
                 selectedDate = LocalDate.ofEpochDay(selectedDateInMillis / 86400000).toString()
-                showDialog.value= false
+                showDialog.value = false
             }
         }
     }

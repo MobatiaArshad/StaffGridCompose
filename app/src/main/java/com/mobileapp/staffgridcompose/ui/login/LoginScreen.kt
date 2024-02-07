@@ -17,7 +17,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -103,7 +102,7 @@ fun LoginScreen(
                         .padding(top = 24.dp),
                     label = "Login"
                 ) {
-
+                    viewModel.showSnack(true,"Pending verification")
                 }
 
                 Row(
@@ -129,6 +128,7 @@ fun LoginScreen(
                     )
                 }
             }
+
             MarkUpText(
                 modifier = Modifier.padding(top = 233.dp),
                 msg = "Don't have account? ",
