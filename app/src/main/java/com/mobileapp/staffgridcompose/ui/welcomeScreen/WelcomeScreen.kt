@@ -26,7 +26,7 @@ import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.onboarding.LightBlueButton
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
 import com.mobileapp.staffx.ui.mainActivity.theme.interSemiBold
-import com.mobileapp.staffx.ui.mainActivity.theme.white
+import com.mobileapp.staffgridcompose.ui.mainActivity.theme.white
 
 @Preview(showSystemUi = true)
 @Composable

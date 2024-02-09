@@ -1,6 +1,5 @@
 package com.mobileapp.staffgridcompose.ui.onboarding
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -64,8 +63,8 @@ import com.mobileapp.staffgridcompose.R
 import com.mobileapp.staffgridcompose.ui.onboarding.model.OnboardCells
 import com.mobileapp.staffgridcompose.utils.ChooseDate
 import com.mobileapp.staffx.ui.mainActivity.theme.inter
-import com.mobileapp.staffx.ui.mainActivity.theme.naviLight
-import com.mobileapp.staffx.ui.mainActivity.theme.white
+import com.mobileapp.staffgridcompose.ui.mainActivity.theme.naviLight
+import com.mobileapp.staffgridcompose.ui.mainActivity.theme.white
 import java.time.LocalDate
 
 @Preview(showBackground = true)

@@ -1,4 +1,4 @@
-package com.mobileapp.staffx.ui.mainActivity.theme
+package com.mobileapp.staffgridcompose.ui.mainActivity.theme
 
 import androidx.compose.ui.graphics.Color
 

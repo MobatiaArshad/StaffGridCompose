@@ -37,7 +37,7 @@ import com.mobileapp.staffgridcompose.ui.onboarding.MarkUpText
 import com.mobileapp.staffgridcompose.ui.onboarding.RoundedOutlinedTextField
 import com.mobileapp.staffgridcompose.utils.routeOptArgs
 import com.mobileapp.staffx.ui.mainActivity.theme.craftsWorkBold
-import com.mobileapp.staffx.ui.mainActivity.theme.white
+import com.mobileapp.staffgridcompose.ui.mainActivity.theme.white
 
 @Preview(showSystemUi = true)
 @Composable
